@@ -1,42 +1,61 @@
-package ru.geekbrains.Lesson1;
+package Lesson2;
 
-import ru.geekbrains.Lesson1.Obstacles.Obstaclable;
-import ru.geekbrains.Lesson1.Obstacles.Treadmill;
-import ru.geekbrains.Lesson1.Obstacles.Wall;
-import ru.geekbrains.Lesson1.Participants.Cat;
-import ru.geekbrains.Lesson1.Participants.Human;
-import ru.geekbrains.Lesson1.Participants.Participants;
-import ru.geekbrains.Lesson1.Participants.Robot;
-
-public class Main {
-
+public class main {
     public static void main(String[] args) {
 
-        Participants[] participants = {
-                new Cat(5, 1000, "Begemot"),
-                new Cat(7, 1253, "Fred"),
-                new Human(2, 500, "Marusya"),
-                new Human(3, 850, "Petya"),
-                new Robot(10, 5000, "Walle")};
+        String[][] stringsOne = {{"2", "3", "4", "5"},
+                                {"5", "6", "7", "8"},
+                                {"8", "9", "0", "1"},
+                                {"1", "3", "4", "5"}};
 
-        Obstaclable[] obstaclables = {
-                new Treadmill(800),
-                new Treadmill(500),
-                new Wall(2),
-                new Wall(5)};
+        String[][] stringsTwo = {{"2", "3", "4", "5"},
+                                {"5", "6", "7", "8"},
+                                {"8", "9", "b", "1"},
+                                {"1", "3", "4", "5"}};
 
-        for (Participants member : participants
-        ) {
-            for (Obstaclable obstactable : obstaclables
-            ) {
-                if (obstactable.toJump(member.getMaxHeight()) || obstactable.toRun(member.getMaxLength())) {
-                    System.out.printf("%s успешно проходит дистанцию. %s %n", member, obstactable);
-                } else System.out.printf("%s провалил дистанцию и не %s %n", member, obstactable);
+        String[][] stringsThree = {{"5", "6", "7", "8"},
+                                    {"8", "9", "0", "1"},
+                                    {"1", "3", "4", "5"}};
 
-            }
 
+        try {
+            createArr(stringsThree);
+            System.out.println("Sum is " + +calcArr(stringsOne));
+        } catch (MyArraySizeException e) {
+            e.printStackTrace();
+        } catch (MyArrayDataException e) {
+            e.printStackTrace();
         }
 
+
+    }
+
+
+    private static void createArr(String[][] arr) throws MyArraySizeException {
+        if (arr.length != 4) throw new MyArraySizeException("Не правильное количество строк");
+        for (int i = 0; i < arr.length; i++) {
+            if (arr[i].length != 4) throw new MyArraySizeException("Неверное количество столбцов");
+            for (int j = 0; j < arr[i].length; j++) {
+                System.out.print(arr[i][j]);
+                System.out.print(" ");
+
+            }
+            System.out.println(" ");
+        }
+    }
+
+    private static int calcArr(String[][] arr) throws MyArrayDataException {
+        int sum = 0;
+        for (int i = 0; i < arr.length; i++) {
+            for (int j = 0; j < arr[i].length; j++) {
+                try {
+                    sum += Integer.parseInt(arr[i][j]);
+                } catch (NumberFormatException e) {
+                    throw new MyArrayDataException(i, j);
+                }
+            }
+        }
+        return sum;
 
     }
 }
