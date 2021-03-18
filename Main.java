@@ -1,42 +1,44 @@
-package ru.geekbrains.Lesson1;
-
-import ru.geekbrains.Lesson1.Obstacles.Obstaclable;
-import ru.geekbrains.Lesson1.Obstacles.Treadmill;
-import ru.geekbrains.Lesson1.Obstacles.Wall;
-import ru.geekbrains.Lesson1.Participants.Cat;
-import ru.geekbrains.Lesson1.Participants.Human;
-import ru.geekbrains.Lesson1.Participants.Participants;
-import ru.geekbrains.Lesson1.Participants.Robot;
+package Lesson3;
+import java.io.IOException;
+import java.util.*;
 
 public class Main {
+    static final String FILE_NAME1 = "C://JAVA/Java2Lesson3.txt";
+    static final String FILE_NAME2 = "Java2Lesson3.txt";
+
 
     public static void main(String[] args) {
-
-        Participants[] participants = {
-                new Cat(5, 1000, "Begemot"),
-                new Cat(7, 1253, "Fred"),
-                new Human(2, 500, "Marusya"),
-                new Human(3, 850, "Petya"),
-                new Robot(10, 5000, "Walle")};
-
-        Obstaclable[] obstaclables = {
-                new Treadmill(800),
-                new Treadmill(500),
-                new Wall(2),
-                new Wall(5)};
-
-        for (Participants member : participants
-        ) {
-            for (Obstaclable obstactable : obstaclables
-            ) {
-                if (obstactable.toJump(member.getMaxHeight()) || obstactable.toRun(member.getMaxLength())) {
-                    System.out.printf("%s успешно проходит дистанцию. %s %n", member, obstactable);
-                } else System.out.printf("%s провалил дистанцию и не %s %n", member, obstactable);
-
-            }
-
+        // first homework item
+        List<String> wordArray = new ArrayList<String>();
+        wordArray = ArrayOperation.fillTheArray(wordArray);
+        System.out.println(wordArray + "\n");
+        ArrayOperation.printUniqueWords(wordArray);
+        wordArray.clear();
+        try {
+            wordArray = ArrayOperation.fillTheArrayFromFile(wordArray, FILE_NAME2);
+        } catch (IOException e) {
+            System.out.println("Failed to fill array from file!\n");
         }
+        try {
+            wordArray = ArrayOperation.fillTheArrayFromFile(wordArray, FILE_NAME1);
+        } catch (IOException e) {
+            System.out.println("Failed to fill array from file!\n");
+        }
+        System.out.println(wordArray + "\n");
+        ArrayOperation.printUniqueWords(wordArray);
+        // second homework item
+        Phonebook phonebook = new Phonebook();
 
+        phonebook.add(2304578, "Сирмайс");
+        phonebook.add(5678794, "Сирмайс");
+        phonebook.add(3456783, "Турчан");
+        phonebook.add(3456278, "Левагина");
+        phonebook.add(9786053, "Путин");
+        phonebook.add(6475893, "Турчан");
 
+        phonebook.get("Турчан");
+        phonebook.get("Сирмайс");
+        phonebook.get("Путин");
+        phonebook.get("Левагина");
     }
 }
